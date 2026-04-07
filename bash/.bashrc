@@ -92,5 +92,9 @@ alias free='free -mt'
 alias cputemp='sensors | grep Core'
 alias fastfetch='fastfetch --logo "arch"'
 
-# Fastfetch in startup
-fastfetch
+# Single Fastfetch on Startup
+if [ -z "$FASTFETCH_SHOWN" ] && [ -z "$TMUX" ]; then
+	fastfetch
+	export FASTFETCH_SHOWN=1
+fi
+

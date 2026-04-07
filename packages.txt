@@ -51,7 +51,6 @@ graphviz
 grep
 gzip
 harfbuzz
-harfbuzz-icu
 imagemagick
 imath
 inetutils
@@ -62,7 +61,6 @@ ldns
 leptonica
 less
 libacl
-libandroid-complex-math
 libandroid-execinfo
 libandroid-glob
 libandroid-posix-semaphore
@@ -136,7 +134,6 @@ libogg
 libopencore-amr
 libopenmpt
 libopus
-libpaper
 libpixman
 libplacebo
 libpng
@@ -194,7 +191,6 @@ llvm
 lsof
 lua51
 lua51-lpeg
-lua52
 lua54
 luajit
 luarocks
@@ -245,8 +241,8 @@ shellcheck
 speexdsp
 svt-av1
 tar
+taskwarrior
 tealdeer
-teckit
 tectonic
 termux-am
 termux-am-socket
@@ -257,7 +253,6 @@ termux-exec
 termux-keyring
 termux-licenses
 termux-tools
-texlive-bin
 tmux
 tree-sitter
 tree-sitter-bash

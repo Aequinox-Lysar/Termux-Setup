@@ -1,5 +1,4 @@
 # Reproduzierbares Termux Setup
 Dieses Projekt soll zum einen mein Termux Setup sichern und einfach reproduzierbar machen.
-
-## Wichtige Befehle
-- Paketliste erstellen --> `pkg list-installed | tail -n +2 | cut -d/ -f1 | sort > ~/dotfiles/packages.txt`
+Meine Setup.sh übernimmt Setup und Pflege des Systems während des Betriebs.
+Das Script erwartet den dotfiles Ordner unter Home.

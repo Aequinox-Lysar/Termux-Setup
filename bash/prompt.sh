@@ -32,11 +32,11 @@ git_prompt() {
 # Bestimmte Ordner durch Icons ersetzen.
 dir_icon() {
     case "$PWD" in
-        "$HOME") echo "" ;;                          # Home
-        "$HOME/dotfiles"*) echo "" ;;                # Dotfiles
-        "$HOME/projects"*) echo "󰲋" ;;               # Projekte
-        "$HOME/storage"*) echo "󰉋" ;;                # Storage
-        *) echo "~${PWD#$HOME}" ;;                 # Default
+        "$HOME") echo "" ;;			# Home
+        "$HOME/dotfiles"*) echo "" ;;		# Dotfiles
+        "$HOME/storage"*) echo "󱊟" ;;		# Storage
+	"$HOME/Dokumente"*) echo "󰈙" ;;		# Dokumente
+        *) echo "~${PWD#$HOME}" ;;		# Default
     esac
 }
 
@@ -50,7 +50,7 @@ update_prompt() {
 	cr_dir="36"
 
 	PS1='\[\033[0;${cr_bar}m\]┌──(\[\033[1;${cr_name}m\]${user_name} \[\033[0;${cr_sym}m\]${sym} \[\033[1;${cr_name}m\]Hackdroid\[\033[0;${cr_bar}m\])-[\[\033[0;${cr_dir}m\] $(dir_icon) \[\033[0;${cr_bar}m\]] $(git_prompt)
-\[\033[0;${cr_bar}m\]└─\[\033[1;${cr_end}m\]\$\[\033[0m\] '
+\[\033[0;${cr_bar}m\]└─\[\033[1;${cr_end}m\]\[\033[0m\] '
 }
 
 PROMPT_COMMAND=update_prompt

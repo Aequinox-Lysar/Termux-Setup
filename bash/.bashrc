@@ -1,7 +1,7 @@
 #### Global Variables ####
 
 # User name
-user_name="neo"
+user_name="daniel"
 
 # Default Editor
 editor="nvim"
@@ -58,24 +58,15 @@ shopt -s extglob
 # cd when entering just a path
 shopt -s autocd
 
-#### Prompt ###########################
 
-#sym="㉿"      # symbol of prompt
-#bar_cr="34"   # color of bars
-#name_cr="37"  # color of user & host
-#end_cr="37"   # color of prompt end
-#dir_cr="36"   # color of current directory
-
-#PS1='\[\033[0;${bar_cr}m\]┌──(\[\033[1;${name_cr}m\]${user_name} ${sym} Hackdroid\[\033[0;${bar_cr}m\])-[\[\033[0;${dir_cr}m\]\w\[\033[0;${bar_cr}m\]]
-#\[\033[0;${bar_cr}m\]└─\[\033[1;${end_cr}m\]\$\[\033[0m\] '
-
-#### Mein eigener Prompt #####################
+#### Mein  Prompt ####
 
 # Nur für interaktive Shell
 [[ $- != *i* ]] && return
 
 # Eigenen Prompt einbinden
 [ -f ~/.config/bash/prompt.sh ] && source ~/.config/bash/prompt.sh
+
 
 #### Aliases #####
 

@@ -1,15 +1,18 @@
 #!/bin/bash
 
-# Framework zur dynamischen Generierung meiner PS1
+# Mein eigenes Framework zur dynamischen Generierung meiner PS1
+# vollständig in Bash
 
 # ################################################
-#	Globale Variablen
+#	GLOBALE VARIABLEN
 # ###############################################
 
 HAS_GIT=0
+HAS_TASKS=0
+RESET="\033[0m"
 
 # ################################################
-#	Farben (256 Farben Modus)				
+#	FARBEN (256 FARBEN MODUS)				
 # ###############################################
 
 BLACK=0
@@ -20,11 +23,10 @@ BLUE=69
 PURPLE=92
 GREY=240
 
-RESET="\033[0m"
-
 # ################################################
-#	Hilfsfunktionen				
+#	HILFSFUNKTIONEN				
 # ###############################################
+
 fg() {
 	printf "\033[38;5;%sm" "$1"
 }
@@ -61,23 +63,48 @@ reset_module() {
 }
 
 # ################################################
-#	Modul Intro	
+#	MODUL INTRO
+#	INFO: Hier wird der Anfang des Prompts
+#	bis zum ersten Seperator definiert.
 # ###############################################
 
 module_start() {
 
-	local SYM=""
+	local SYM="\033[38;5;46m"
 	MODULE_FG=$WHITE
 	MODULE_BG=$BLUE
-	MODULE_TEXT=" ${user_name} ${SYM} Hackdroid "
+	MODULE_TEXT=" ${user_name} ${SYM} \033[38;5;7mHackdroid "
 	MODULE_SEPERATOR_F="┌──"
 	MODULE_SEPERATOR_B=""
 
 }
 
+# ################################################ 
+#	MODUL TASKWARRIOR
+#	INFO: Dieses Modul wird angezeigt sobald
+#	Taskwarrior Tasks enthält.
+# ###############################################
+
+module_taskwarrior() {
+
+	TASK_COUNT=$(task +PENDING count 2>/dev/null)
+	
+	if [[ $TASK_COUNT -gt 0 ]]; then
+		HAS_TASKS=1
+	fi
+
+	MODULE_FG=$WHITE
+	MODULE_BG=57
+	MODULE_TEXT="  $TASK_COUNT"
+	MODULE_SEPERATOR_F=""
+	MODULE_SEPERATOR_B=""
+}
 
 # ################################################ 
-#	Modul Pfadinfo		
+#	MODUL PFADINFO
+#	INFO: Hier wird der aktuelle Pfad durch
+#	Icons ersetzt, oder als verkürzter Pfad
+#	angegeben.
 # ###############################################
 
 # Bestimmte Ordner durch Icons ersetzen.
@@ -98,8 +125,11 @@ module_path() {
 	MODULE_SEPERATOR_F=""
 	MODULE_SEPERATOR_B=""
 }
+
 # ################################################
-#	Modul Git		
+#	MODUL GIT
+#	INFO: Zeigt aktuellen Branch sowie seinen
+#	Status mittels Icons.
 # ###############################################
 
 module_git() {
@@ -135,7 +165,10 @@ module_git() {
 }
 
 # ################################################
-#	Modul Ende		
+#	MODUL ENDE
+#	INFO: Hier wird der Abschluss des Prompts
+#	definiert. Der Teil wir in der zweiten
+#	Zeile angezeigt.
 # ###############################################
 
 module_end() {
@@ -143,15 +176,21 @@ module_end() {
 	MODULE_BG="$BLACK"
 	MODULE_TEXT="└─ "
 }
+
 # ################################################
-#	Prompt zusammenbauen		
+#	PROMPT ZUSAMMENBAUEN
+#	INFO: Hier wird der ganz Klumpatsch,
+#	welcher definiert wurde, zusammengesetzt
+#	und final in die PS1 geschrieben.
 # ###############################################
 
 build_prompt() {
 	
 	# Reset Status
 	HAS_GIT=0
+	HAS_TASKS=0
 	module_git
+	module_taskwarrior
 	reset_module
 	CURRENT_BG=""	
 	local PROMPT=""
@@ -162,6 +201,15 @@ build_prompt() {
 		PROMPT+="$(render_seperator "$MODULE_SEPERATOR_F" "$MODULE_BG")"
 	fi
 	if [[ -n $MODULE_TEXT ]]; then
+		PROMPT+="$(render_segment "$MODULE_FG" "$MODULE_BG" "$MODULE_TEXT")"
+		PROMPT+="$(render_seperator "$MODULE_SEPERATOR_B" "$MODULE_BG")"
+	fi
+	reset_module
+
+	# Taskwarrior
+	module_taskwarrior
+	if [[ $HAS_TASKS -eq 1 ]]; then
+		PROMPT+="$(render_seperator "$MODULE_SEPERATOR_F" "$MODULE_BG")"
 		PROMPT+="$(render_segment "$MODULE_FG" "$MODULE_BG" "$MODULE_TEXT")"
 		PROMPT+="$(render_seperator "$MODULE_SEPERATOR_B" "$MODULE_BG")"
 	fi
@@ -211,8 +259,13 @@ build_prompt() {
 
 	
 }
+
 # ################################################
-#	Trigger			
+#	TRIGGER	
+#	INFO: Dies ist das Ereignis an dem der
+#	Prompt neu erstellt und gerendert wird.
 # ###############################################
 
 PROMPT_COMMAND=build_prompt
+
+# ######### ENDE DES SKRIPTES ##########

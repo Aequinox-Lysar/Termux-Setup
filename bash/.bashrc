@@ -92,8 +92,8 @@ alias cputemp='sensors | grep Core'
 alias fastfetch='fastfetch --logo "arch"'
 
 # Single Fastfetch on Startup
-if [ -z "$FASTFETCH_SHOWN" ] && [ -z "$TMUX" ]; then
-	fastfetch
-	export FASTFETCH_SHOWN=1
-fi
+#if [ -z "$FASTFETCH_SHOWN" ] && [ -z "$TMUX" ]; then
+#	fastfetch
+#	export FASTFETCH_SHOWN=1
+#fi
 

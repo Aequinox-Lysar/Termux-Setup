@@ -97,3 +97,13 @@ alias fastfetch='fastfetch --logo "arch"'
 #	export FASTFETCH_SHOWN=1
 #fi
 
+# Autostart für  TMUX
+if [ -n "$PS1" ] && [ -z "$TMUX" ]; then
+	if [ -t 0 ]; then
+		if tmux has-session -t default 2>/dev/null; then
+			tmux attach-session -t default
+		else
+			tmux new-session -s default
+		fi
+	fi
+fi

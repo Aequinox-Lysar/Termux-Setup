@@ -70,7 +70,7 @@ reset_module() {
 
 module_start() {
 
-	local SYM="\033[38;5;46m"
+	local SYM="\033[38;5;196m"
 	MODULE_FG=$WHITE
 	MODULE_BG=$BLUE
 	MODULE_TEXT=" ${user_name} ${SYM} \033[38;5;7mHackdroid "
@@ -114,6 +114,7 @@ dir_path() {
         "$HOME/dotfiles"*) echo "" ;;		# Dotfiles
         "$HOME/storage"*) echo "󱊟" ;;		# Storage
 	"$HOME/Dokumente"*) echo "󰈙" ;;		# Dokumente
+	"$HOME/Musik"*) echo "" ;;		# Musik
         *) echo "~${PWD#$HOME}" ;;		# Default
     esac
 }
@@ -195,6 +196,11 @@ build_prompt() {
 	CURRENT_BG=""	
 	local PROMPT=""
 	
+	# Leerzeile zwischen TopBar und Prompt in TMUX
+	if [ -n "$TMUX" ]; then
+		PROMPT+="\n"
+	fi
+
 	# Startmodul
 	module_start
 	if [[ -n $MODULE_SEPERATOR_F ]]; then

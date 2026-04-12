@@ -45,6 +45,8 @@ vim.keymap.set({"i","s"}, "<S-Tab>", function()
 end, {silent = true})
 -- vim.cmd[[colorscheme industry]]
 vim.keymap.set('n', '<leader>ff', ':Telescope find_files<CR>')
+vim.keymap.set({ "n", "v", "o" }, "ö", ")" )
+vim.keymap.set({ "n", "v", "o" }, "ä", "(" )
 vim.api.nvim_set_keymap("n", "<leader>g", ":w<CR>:terminal glow %<CR>", { noremap = true, silent = true } )
 vim.api.nvim_create_autocmd("FileType", { 
 	pattern = "c",

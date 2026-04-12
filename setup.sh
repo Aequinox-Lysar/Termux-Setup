@@ -55,7 +55,7 @@ system_update(){
 	
 # Simples Menü um Funktionen auszuwählen.
 echo -e "${BOLD}${BLUE}================================${RESET}"
-echo -e "${BOLD}${BLUE}         HACKDROID SETUP        ${RESET}"
+echo -e "${BOLD}${BLUE}       HACKDROID OS SETUP       ${RESET}"
 echo -e "${BOLD}${BLUE}================================${RESET}\n"
 
 echo "Was willst du tun?"

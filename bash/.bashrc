@@ -90,6 +90,7 @@ alias la='ls -alFh --group-directories-first'
 alias free='free -mt'
 alias cputemp='sensors | grep Core'
 alias fastfetch='fastfetch --logo "arch"'
+alias setup='bash ~/dotfiles/setup.sh'
 
 # Single Fastfetch on Startup
 #if [ -z "$FASTFETCH_SHOWN" ] && [ -z "$TMUX" ]; then

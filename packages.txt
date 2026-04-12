@@ -42,6 +42,7 @@ ghostscript
 giflib
 git
 glib
+glow
 glslang
 gnupg
 gpgme

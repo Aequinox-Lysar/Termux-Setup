@@ -70,7 +70,7 @@ reset_module() {
 
 module_start() {
 
-	local SYM="\033[38;5;196m"
+	local SYM="\033[38;5;196m󱌃"
 	MODULE_FG=$WHITE
 	MODULE_BG=$BLUE
 	MODULE_TEXT=" ${user_name} ${SYM} \033[38;5;7mHackdroid "

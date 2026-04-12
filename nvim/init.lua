@@ -17,6 +17,7 @@ vim.o.cmdheight = 2
 vim.opt.termguicolors = true
 vim.notify = require("notify")
 vim.wo.number = true
+vim.cmd("set guicursor=a:ver100")
 -- Keybinding TAB for Snippet expansion
 local ls = require("luasnip")
 

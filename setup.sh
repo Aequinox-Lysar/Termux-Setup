@@ -23,6 +23,20 @@ setup_dotfiles() {
 	echo "Benötigte Pakete werden installiert..."
 	xargs pkg install -y < packages.txt
 
+	# Prüfen ob Symlinkfiles breits existieren, ggf. entfernen.
+	files=("$HOME/.bashrc" /
+		"$HOME/.config/bash" /
+		"$HOME/.config/nvim" /
+		"$HOME/.config/tmux" /
+		"$HOME/.termux" /
+		"$HOME/.taskrc")
+	
+	for file in "${files[@]}"; do
+		if [ -f "$file" ]; then
+			rm "$file"
+		fi
+	done
+
 	echo "Erstelle Symlinks..."
 	ln -s ~/dotfiles/bash/.bashrc ~/.bashrc
 	ln -s ~/dotfiles/bash ~/.config/bash

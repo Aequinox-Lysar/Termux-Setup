@@ -23,27 +23,13 @@ setup_dotfiles() {
 	echo "Benötigte Pakete werden installiert..."
 	xargs pkg install -y < packages.txt
 
-	# Prüfen ob Symlinkfiles breits existieren, ggf. entfernen.
-	files=("$HOME/.bashrc" /
-		"$HOME/.config/bash" /
-		"$HOME/.config/nvim" /
-		"$HOME/.config/tmux" /
-		"$HOME/.termux" /
-		"$HOME/.taskrc")
-	
-	for file in "${files[@]}"; do
-		if [ -f "$file" ]; then
-			rm "$file"
-		fi
-	done
-
 	echo "Erstelle Symlinks..."
-	ln -s ~/dotfiles/bash/.bashrc ~/.bashrc
-	ln -s ~/dotfiles/bash ~/.config/bash
-	ln -s ~/dotfiles/nvim ~/.config/nvim
-	ln -s ~/dotfiles/tmux ~/.config/tmux
-	ln -s ~/dotfiles/.termux ~/.termux
-	ln -s ~/dotfiles/tasks/.taskrc ~/.taskrc
+	ln -sfn ~/dotfiles/bash/.bashrc ~/.bashrc
+	ln -sfn ~/dotfiles/bash ~/.config/bash
+	ln -sfn ~/dotfiles/nvim ~/.config/nvim
+	ln -sfn ~/dotfiles/tmux ~/.config/tmux
+	ln -sfn ~/dotfiles/.termux ~/.termux
+	ln -sfn ~/dotfiles/tasks/.taskrc ~/.taskrc
 
 	# Datei zum Unterdrücken der "Welcome" Nachricht beim Start
 	touch ~/.hushlogin

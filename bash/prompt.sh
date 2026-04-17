@@ -9,6 +9,7 @@
 
 HAS_GIT=0
 HAS_TASKS=0
+TASK_IS_ACTIVE=0
 RESET="\033[0m"
 
 # ################################################
@@ -62,6 +63,21 @@ reset_module() {
 	MODULE_SEPERATOR_B=""
 }
 
+render_prompt() {
+	if [[ $TASK_IS_ACTIVE -eq 1 ]]; then
+		
+		local PROMPT_RIGHT_LENGTH=$(echo - "$PROMPT_RIGHT" | sed -E 's/\x1b\[[0-9;]*[mK]//g' | wc -m)
+
+		PROMPT="$PROMPT"
+		PROMPT+="\e[$((COLUMNS - PROMPT_RIGHT_LENGTH + 11))G"
+		PROMPT+="$PROMPT_RIGHT"
+
+		printf "$PROMPT"
+	else
+		printf "$PROMPT"
+	fi
+}
+
 # ################################################
 #	MODUL INTRO
 #	INFO: Hier wird der Anfang des Prompts
@@ -88,9 +104,14 @@ module_start() {
 module_taskwarrior() {
 
 	TASK_COUNT=$(task +PENDING count 2>/dev/null)
+	ACTIVE_TASK=$(task +ACTIVE export | jq -r '.[0].description')
 	
 	if [[ $TASK_COUNT -gt 0 ]]; then
 		HAS_TASKS=1
+	fi
+
+	if  [[ "$(task +ACTIVE count)" -gt 0 ]]; then
+		TASK_IS_ACTIVE=1
 	fi
 
 	MODULE_FG=$WHITE
@@ -98,6 +119,10 @@ module_taskwarrior() {
 	MODULE_TEXT="  $TASK_COUNT"
 	MODULE_SEPERATOR_F=""
 	MODULE_SEPERATOR_B=""
+
+	MODULE_IA_TEXT=" TASK: $ACTIVE_TASK"
+	MODULE_IA_SEPERATOR_F=""
+	MODULE_IA_SEPERATOR_B=""
 }
 
 # ################################################ 
@@ -190,11 +215,13 @@ build_prompt() {
 	# Reset Status
 	HAS_GIT=0
 	HAS_TASKS=0
+	TASK_IS_ACTIVE=0
 	module_git
 	module_taskwarrior
 	reset_module
 	CURRENT_BG=""	
 	local PROMPT=""
+	local PROMPT_RIGHT=""
 	
 	# Leerzeile zwischen TopBar und Prompt in TMUX
 	if [ -n "$TMUX" ]; then
@@ -219,6 +246,13 @@ build_prompt() {
 		PROMPT+="$(render_segment "$MODULE_FG" "$MODULE_BG" "$MODULE_TEXT")"
 		PROMPT+="$(render_seperator "$MODULE_SEPERATOR_B" "$MODULE_BG")"
 	fi
+
+	if [[ $TASK_IS_ACTIVE -eq 1 ]]; then
+		PROMPT_RIGHT+="$(render_seperator "$MODULE_IA_SEPERATOR_F" "$MODULE_BG")"
+		PROMPT_RIGHT+="$(render_segment "$MODULE_FG" "$MODULE_BG" "$MODULE_IA_TEXT")"
+		PROMPT_RIGHT+="$RESET"
+		PROMPT_RIGHT+="$(render_seperator "$MODULE_IA_SEPERATOR_B" "$MODULE_BG")"
+	fi
 	reset_module
 
 	# Pfadmodul
@@ -232,8 +266,14 @@ build_prompt() {
 		PROMPT+="$(render_segment "$MODULE_FG" "$MODULE_BG" "$MODULE_TEXT")"
 		
 	fi
+
 	if [[ $HAS_GIT -eq 0 ]]; then
 		MODULE_SEPERATOR_B=""
+		PROMPT+="$RESET"
+	fi
+
+	if [[ $TASK_IS_ACTIVE -eq 1 && $HAS_GIT -eq 0 ]]; then
+		MODULE_SEPERATOR_B=""
 		PROMPT+="$RESET"
 	fi
 
@@ -245,12 +285,18 @@ build_prompt() {
 	if [[ -n $MODULE_SEPERATOR_F ]]; then
 		PROMPT+="$(render_seperator "$MODULE_SEPERATOR_F" "$MODULE_BG")"
 	fi
+	if [[ $TASK_IS_ACTIVE -eq 1 ]]; then
+		MODULE_SEPERATOR_B=""
+	fi
 	if [[ -n $MODULE_TEXT ]]; then
 		PROMPT+="$(render_segment "$MODULE_FG" "$MODULE_BG" "$MODULE_TEXT")"
 		PROMPT+="$RESET"
 		PROMPT+="$(render_seperator "$MODULE_SEPERATOR_B" "$MODULE_BG")"
 	fi
 	reset_module
+	
+	# erste Zeile fertig rendern
+	PROMPT="$(render_prompt)"
 
 	PROMPT+="\n"
 

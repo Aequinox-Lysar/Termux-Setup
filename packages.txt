@@ -1,5 +1,7 @@
 7zip
+abook
 abseil-cpp
+aerc
 alsa-lib
 apt
 attr
@@ -28,6 +30,7 @@ fastfetch
 fd
 ffmpeg
 fftw
+file
 findutils
 fontconfig
 fontconfig-utils

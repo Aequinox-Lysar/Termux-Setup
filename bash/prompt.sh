@@ -138,8 +138,9 @@ dir_path() {
         "$HOME") echo "" ;;			# Home
         "$HOME/dotfiles"*) echo "" ;;		# Dotfiles
         "$HOME/storage"*) echo "󱊟" ;;		# Storage
-	"$HOME/Dokumente"*) echo "󰈙" ;;		# Dokumente
-	"$HOME/Musik"*) echo "" ;;		# Musik
+	"$HOME/workspace"*) echo "󰈙" ;;		# Arbeitsplatz
+	"$HOME/musik"*) echo "" ;;		# Musik
+	"$HOME/lernen"*) echo "󱛉" ;;		# lernen
         *) echo "~${PWD#$HOME}" ;;		# Default
     esac
 }

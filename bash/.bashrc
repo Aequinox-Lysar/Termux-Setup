@@ -92,6 +92,7 @@ alias cputemp='sensors | grep Core'
 alias fastfetch='fastfetch --logo "arch"'
 alias setup='bash ~/dotfiles/setup.sh'
 alias musik='cmus'
+alias mail='aerc'
 
 # Single Fastfetch on Startup
 #if [ -z "$FASTFETCH_SHOWN" ] && [ -z "$TMUX" ]; then

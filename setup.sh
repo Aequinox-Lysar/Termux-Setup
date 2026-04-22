@@ -16,7 +16,7 @@ msg_ok() {
 }  
 
 setup_dotfiles() {
-	echo "Updating Termux..."
+	echo "Updating Hackdroid..."
 	pkg update -y
 	pkg upgrade -y
 
@@ -30,6 +30,7 @@ setup_dotfiles() {
 	ln -sfn ~/dotfiles/tmux ~/.config/tmux
 	ln -sfn ~/dotfiles/.termux ~/.termux
 	ln -sfn ~/dotfiles/tasks/.taskrc ~/.taskrc
+	ln -sfn ~/dotfiles/aerc ~/.config/aerc
 
 	# Datei zum Unterdrücken der "Welcome" Nachricht beim Start
 	touch ~/.hushlogin
@@ -50,7 +51,7 @@ generate_package_list() {
 system_update(){
 	apt update -y
 	apt upgrade -y
-	msg_ok "Termux wurde erfolgreich aktualisiert."
+	msg_ok "Hackdroid wurde erfolgreich aktualisiert."
 }
 	
 # Simples Menü um Funktionen auszuwählen.
@@ -59,7 +60,7 @@ echo -e "${BOLD}${BLUE}       HACKDROID OS SETUP       ${RESET}"
 echo -e "${BOLD}${BLUE}󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋󰯋${RESET}\n"
 
 echo "Was willst du tun?"
-select option in "Setup Dotfiles + Pakete" "Paketliste erstellen" "Termux aktualisieren" "Beenden"; do
+select option in "Setup Dotfiles + Pakete" "Paketliste erstellen" "Hackdroid aktualisieren" "Beenden"; do
 	case $REPLY in
 		1) setup_dotfiles ;;
 		2) generate_package_list ;;
